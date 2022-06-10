@@ -50,6 +50,7 @@ sudo virt-install \
   --virt-type kvm \
   --graphics none \
   --network network=default,model=virtio \
+  --network network=br0,model=virtio \
   --import \
   --noreboot \
   --noautoconsole

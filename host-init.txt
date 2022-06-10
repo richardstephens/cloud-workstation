@@ -1,5 +1,7 @@
 
 #thiis wlll be a user-data script eventually
+apt-get update
+apt-get -y upgrade
 
 apt install -y cloud-image-utils qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
 
@@ -33,3 +35,6 @@ sysctl -p
 
 systemctl enable wg-quick@wg0.service
 systemctl start wg-quick@wg0.service
+
+ ufw route allow in on wg0 out on virbr0
+iptables -t nat -I POSTROUTING -o virbr0 -j MASQUERADE
