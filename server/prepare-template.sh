@@ -67,7 +67,8 @@ runcmd:
  - [rm, "-rf", "/usr/local/go"]
  - [tar, "-C", "/usr/local", "-xzf", "/run/inst/go.tgz"]
  - [rm, /run/inst/go.tgz]
- - "sudo shutdown -P 60 | at now + 1 min"
+ - "echo \"export PATH=\$PATH:/usr/local/go/bin\" >> /home/ubuntu/.profile"
+ - "echo \"sudo cloud-init clean; sudo shutdown -P 60\" | at now + 3 min"
 EOF
 
 
