@@ -51,6 +51,10 @@ packages:
  - docker-ce-cli
  - containerd.io
  - docker-compose-plugin
+runcmd:
+ - sudo adduser ubuntu kvm
+ - [curl, "-L", "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl", "-o", /usr/local/bin/kubectl]
+ - [chmod, "+x", /usr/local/bin/kubectl]
 
 " | sudo tee /var/lib/libvirt/images/templates/cloud-init.cfg
 
