@@ -35,6 +35,7 @@ apt:
       source: deb [arch=amd64] https://download.docker.com/linux/ubuntu $RELEASE stable
       keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 packages:
+ - at
  - python2
  - python-is-python3
  - openjdk-8-jdk
@@ -56,7 +57,17 @@ runcmd:
  - sudo adduser ubuntu kvm
  - [curl, "-L", "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl", "-o", /usr/local/bin/kubectl]
  - [chmod, "+x", /usr/local/bin/kubectl]
-
+ - [curl, "-L", "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64", "-o", /usr/local/bin/minikube]
+ - [chmod, "+x", /usr/local/bin/minikube]
+ - [sudo, "-u", ubuntu, minikube, config, set, driver, kvm2]
+ - [curl, "-L", "https://github.com/bazelbuild/bazelisk/releases/download/v1.11.0/bazelisk-linux-amd64", "-o", /usr/local/bin/bazel]
+ - [chmod, "+x", /usr/local/bin/bazel]
+ - mkdir /run/inst
+ - [curl, "-L", "https://go.dev/dl/go1.18.3.linux-amd64.tar.gz", "-o", "/run/inst/go.tgz"]
+ - [rm, "-rf", "/usr/local/go"]
+ - [tar, "-C", "/usr/local", "-xzf", "/run/inst/go.tgz"]
+ - [rm, /run/inst/go.tgz]
+ - "sudo shutdown -P 60 | at now + 1 min"
 EOF
 
 
