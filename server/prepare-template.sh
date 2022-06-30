@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export RELEASE=jammy
+export PASSWORD=$(uuidgen)
 
 qemu-img convert \
  -f qcow2 \
