@@ -13,7 +13,8 @@ qemu-img resize \
   /var/lib/libvirt/images/templates/ubuntu.qcow2 \
   50G
 export PASSWORD=$(uuidgen)
-echo "#cloud-config
+cat <<EOF | tee /var/lib/libvirt/images/templates/cloud-init.cfg
+#cloud-config
 system_info:
   default_user:
     name: ubuntu
@@ -56,7 +57,7 @@ runcmd:
  - [curl, "-L", "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl", "-o", /usr/local/bin/kubectl]
  - [chmod, "+x", /usr/local/bin/kubectl]
 
-" | sudo tee /var/lib/libvirt/images/templates/cloud-init.cfg
+EOF
 
 
 
