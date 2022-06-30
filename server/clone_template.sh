@@ -17,7 +17,7 @@ sudo mkdir /var/lib/libvirt/images/$VM_NAME \
 
 sudo qemu-img resize \
   /var/lib/libvirt/images/$VM_NAME/root-disk.qcow2 \
-  30G
+  250G
 
 
 echo "#cloud-config
