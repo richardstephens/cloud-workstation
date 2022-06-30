@@ -3,8 +3,23 @@
 apt-get update
 apt-get -y upgrade
 
-apt install -y cloud-image-utils qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+apt install -y zfsutils-linux
+#TODO: just grab the free nvme devices - testing on c6id.metal for now.
+zpool create tank /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1 /dev/nvme3n1
 
+openssl rand -hex -out /root/zfskey 64
+zfs create -o encryption=on -o keylocation=file:///root/zfskey -o keyformat=hex tank/libvirt
+zfs set mountpoint=/var/lib/libvirt tank/libvirt
+
+
+apt install -y cloud-image-utils qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst
+
+
+
+cat <<EOF >> /etc/modprobe.d/kvm.conf
+options kvm_intel nested=1
+
+EOF
 
 
 apt install -y wireguard
@@ -36,5 +51,5 @@ sysctl -p
 systemctl enable wg-quick@wg0.service
 systemctl start wg-quick@wg0.service
 
- ufw route allow in on wg0 out on virbr0
-iptables -t nat -I POSTROUTING -o virbr0 -j MASQUERADE
+
+iptables -t nat -I POSTROUTING -o br0 -j MASQUERADE
