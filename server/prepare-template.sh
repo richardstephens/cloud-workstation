@@ -67,11 +67,11 @@ runcmd:
  - [rm, "-rf", "/usr/local/go"]
  - [tar, "-C", "/usr/local", "-xzf", "/run/inst/go.tgz"]
  - [rm, /run/inst/go.tgz]
- - "echo \"export PATH=\\\$PATH:/usr/local/go/bin\" >> /home/ubuntu/.profile"
+ - "echo \"export PATH=\\\\\$PATH:/usr/local/go/bin\" >> /home/ubuntu/.profile"
  - "sudo cloud-init clean"
  - [curl, "-L", "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-368.0.0-linux-x86_64.tar.gz", "-o", "/run/inst/gcloud.tgz"]
  - "sudo tar xzf /run/inst/gcloud.tgz -C /usr/local/bin"
- - "echo \"export PATH=/usr/local/bin/google-cloud-sdk/bin:\\\$PATH\" >> /home/ubuntu/.profile"
+ - "echo \"export PATH=/usr/local/bin/google-cloud-sdk/bin:\\\\\$PATH\" >> /home/ubuntu/.profile"
  - "echo \"sudo cloud-init clean; sudo shutdown -P 15\" | at now + 1 min"
 EOF
 
